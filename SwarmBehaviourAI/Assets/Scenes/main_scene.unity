@@ -210,7 +210,7 @@ MonoBehaviour:
     type: 2}
   enemyPrefab: {fileID: 4390236341879356, guid: addee93ca0ba77144aee1b625d964d0e,
     type: 2}
-  numberOfMembers: 20
+  numberOfMembers: 100
   numberOfEnemies: 5
   members: []
   enemies: []
@@ -240,18 +240,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxFOV: 180
-  maxAcceleration: 100
-  maxVelocity: 50
+  maxAcceleration: 10
+  maxVelocity: 10
   wanderJitter: 20
   wanderRadius: 2
   wanderDistance: 3
   wanderPriority: 10
   cohesionRadius: 20
   cohesionPriority: 60
-  alignmentRadius: 0
-  alignmentPriority: 0
-  separationRadius: 0
-  separationPriority: 0
+  alignmentRadius: 10
+  alignmentPriority: 90
+  separationRadius: 5
+  separationPriority: 90
   avoidanceRadius: 0
   avoidancePriority: 0
 --- !u!1 &1567504604
