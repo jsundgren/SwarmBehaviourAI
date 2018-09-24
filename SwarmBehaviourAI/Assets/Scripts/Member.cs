@@ -36,13 +36,13 @@ public class Member : MonoBehaviour {
 		wanderTarget += new Vector3 (RandomBinomial () * jitter, 0, RandomBinomial () * jitter);
 		wanderTarget = wanderTarget.normalized;
 		wanderTarget *= conf.wanderRadius;
-		Vector3 targetInLocalSpace = wanderTarget + new Vector3 (0, 0, conf.wanderDistance);
+		Vector3 targetInLocalSpace = wanderTarget + new Vector3 (conf.wanderDistance, 0, conf.wanderDistance);
 		Vector3 targetInWorldSpace = transform.TransformPoint (targetInLocalSpace);
 		targetInWorldSpace -= this.pos;
 		return targetInWorldSpace.normalized;
 	}
 
-	Vector3 Cohesion() {
+	protected Vector3 Cohesion() {
 		Vector3 cohesionVector = new Vector3 ();
 		int CountMembers = 0;
 		List<Member> n = l.findNeighbours (this, conf.cohesionRadius);
@@ -66,7 +66,8 @@ public class Member : MonoBehaviour {
 
 	virtual protected Vector3 Combined(){
 		return conf.cohesionPriority * Cohesion () + conf.wanderPriority * Wander () 
-			+ conf.alignmentPriority * Alignment() + conf.separationPriority * Separation();
+			+ conf.alignmentPriority * Alignment() + conf.separationPriority * Separation()
+			+ conf.avoidancePriority * Avoidance();
 	}
 
 	Vector3 Separation(){
@@ -85,7 +86,7 @@ public class Member : MonoBehaviour {
 		return sepVec;
 	}
 
-	Vector3 Alignment(){
+	Vector3 Alignment() {
 		Vector3 alignVec = new Vector3 ();
 		var members = l.findNeighbours (this, conf.alignmentRadius);
 
@@ -96,6 +97,24 @@ public class Member : MonoBehaviour {
 		}
 
 		return alignVec.normalized;
+	}
+
+	Vector3 Avoidance() { 
+		Vector3 avoidVec = new Vector3 ();
+		var eList = l.findEnemies (this, conf.avoidanceRadius);
+
+		if (eList.Count == 0) return avoidVec;
+
+		foreach (Enemy e in eList) {
+			avoidVec += avoidTarget (e.pos);
+		}
+
+		return avoidVec.normalized;
+	}
+
+	Vector3 avoidTarget(Vector3 target){
+		Vector3 neededVel = (pos - target).normalized * conf.maxVelocity;
+		return neededVel - vel;
 	}
 
 	float RandomBinomial() {

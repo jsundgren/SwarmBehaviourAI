@@ -252,8 +252,8 @@ MonoBehaviour:
   alignmentPriority: 90
   separationRadius: 5
   separationPriority: 90
-  avoidanceRadius: 0
-  avoidancePriority: 0
+  avoidanceRadius: 40
+  avoidancePriority: 700
 --- !u!1 &1567504604
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +329,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1567504604}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -3.54, y: 61.4, z: -10}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

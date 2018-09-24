@@ -26,7 +26,7 @@ public class Level : MonoBehaviour {
 	void Spawn(Transform prefab, int count) {
 		for (int i = 0; i < count; i++) {
 			Instantiate(prefab, new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius))
-				,Quaternion.identity);
+				, Quaternion.identity);
 		}
 	}
 
@@ -45,5 +45,17 @@ public class Level : MonoBehaviour {
 		}
 
 		return neighbourFound;
+	}
+		
+	public List<Enemy> findEnemies(Member m, float radius){
+		List<Enemy> getEnemies = new List<Enemy> ();
+
+		foreach (Enemy e in enemies) {
+			if (Vector3.Distance (m.pos, e.pos) <= radius) {
+				getEnemies.Add (e);
+			}
+		}
+
+		return getEnemies;
 	}
 }
