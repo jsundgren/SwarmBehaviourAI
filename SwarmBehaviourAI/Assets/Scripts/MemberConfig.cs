@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MemberConfig : MonoBehaviour {
 
-
-	public float maxFOV = 180;
 	public float maxAcceleration;
 	public float maxVelocity;
 

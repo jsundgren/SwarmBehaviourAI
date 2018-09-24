@@ -28,6 +28,7 @@ public class Member : MonoBehaviour {
 		vel = vel + acc * Time.deltaTime;
 		vel = Vector3.ClampMagnitude (vel, conf.maxVelocity);
 		pos = pos + vel * Time.deltaTime;
+		WrapAround (ref pos, -l.bounds, l.bounds);
 		transform.position = pos;
 	}
 
@@ -40,6 +41,21 @@ public class Member : MonoBehaviour {
 		Vector3 targetInWorldSpace = transform.TransformPoint (targetInLocalSpace);
 		targetInWorldSpace -= this.pos;
 		return targetInWorldSpace.normalized;
+	}
+
+	void WrapAround(ref Vector3 vec, float min, float max) {
+		vec.x = WrapAroundFloat (vec.x, min, max);
+		vec.y = WrapAroundFloat (vec.y, min, max);
+		vec.z = WrapAroundFloat (vec.z, min, max);
+	}
+
+	float WrapAroundFloat(float value, float min, float max) {
+		if (value > max)
+			value = min;
+		else if (value < min)
+			value = max;
+
+		return value;
 	}
 
 	protected Vector3 Cohesion() {

@@ -11,6 +11,7 @@ public class Level : MonoBehaviour {
 	public List<Member> members;
 	public List<Enemy> enemies;
 	public float spawnRadius;
+	public float bounds;
 	// Use this for initialization
 	void Start () {
 		members = new List<Member> ();
@@ -43,7 +44,6 @@ public class Level : MonoBehaviour {
 				neighbourFound.Add (otherMember);
 			}
 		}
-
 		return neighbourFound;
 	}
 		

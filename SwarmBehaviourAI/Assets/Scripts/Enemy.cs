@@ -2,27 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Member {
+public class Enemy : MonoBehaviour {
 
 
 	public List<Member> targets;
-	Member currentTarget;
 	Transform myTrans;
-	int index;
-	/*protected override Vector3 Combined ()
-	{
-		return conf.wanderPriority * Wander() + conf.cohesionPriority * Cohesion();
-	}*/
+	public Vector3 pos;
 
 	public void Start(){
+		pos = transform.position;
 		targets = new List<Member> ();
 		targets.AddRange (FindObjectsOfType<Member> ());
-		index = Random.Range (0, targets.Count);
-		currentTarget = targets [index];
 	}
 
 	public void Update(){
-		transform.LookAt (currentTarget.transform.position);
+		followNearestTarget (findNearestTarget (targets));
+	}
+
+	Transform findNearestTarget(List<Member> L){
+		Transform nearestTarget = null;
+
+		float closestDistSqr = Mathf.Infinity;
+		Vector3 currentPos = transform.position;
+
+		foreach (Member m in L) {
+			Vector3 directionToTarget = m.transform.position - currentPos;
+			float dSqrToTarget = directionToTarget.sqrMagnitude;
+			if (dSqrToTarget < closestDistSqr) {
+				closestDistSqr = dSqrToTarget;
+				nearestTarget = m.transform;
+			}
+		}
+
+		return nearestTarget;
+	}
+
+	void followNearestTarget(Transform t){
+		transform.LookAt (t.transform.position);
 		transform.Translate (Vector3.forward * 5 * Time.deltaTime);
 	}
 }
