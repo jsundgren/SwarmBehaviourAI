@@ -6,7 +6,6 @@ public class Enemy : MonoBehaviour {
 
 
 	public List<Member> targets;
-	Transform myTrans;
 	public Vector3 pos;
 
 	public void Start(){

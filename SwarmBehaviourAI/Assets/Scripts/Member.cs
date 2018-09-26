@@ -29,7 +29,9 @@ public class Member : MonoBehaviour {
 		vel = Vector3.ClampMagnitude (vel, conf.maxVelocity);
 		pos = pos + vel * Time.deltaTime;
 		WrapAround (ref pos, -l.bounds, l.bounds);
+		transform.LookAt (pos);
 		transform.position = pos;
+
 	}
 
 	protected Vector3 Wander() {
