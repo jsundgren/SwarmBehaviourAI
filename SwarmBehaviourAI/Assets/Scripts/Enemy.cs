@@ -38,6 +38,6 @@ public class Enemy : MonoBehaviour {
 
 	void followNearestTarget(Transform t){
 		transform.LookAt (t.transform.position);
-		transform.Translate (Vector3.forward * 5 * Time.deltaTime);
+		transform.Translate (Vector3.forward * 10 * Time.deltaTime);
 	}
 }
