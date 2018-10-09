@@ -22,5 +22,5 @@ public class MemberConfig : MonoBehaviour {
 	public float separationPriority;
 
 	public float avoidanceRadius;
-	public float avoidancePriority;
+
 }

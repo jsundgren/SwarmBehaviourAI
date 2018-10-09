@@ -15,7 +15,16 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public void Update(){
+		targets.Clear ();
+		targets.AddRange (FindObjectsOfType<Member> ());
 		followNearestTarget (findNearestTarget (targets));
+	}
+
+
+	void OnTriggerEnter(Collider col){
+		if (col.gameObject.name == "SheepWhite (1)(Clone)") {
+			Destroy (col.gameObject);
+		}
 	}
 
 	Transform findNearestTarget(List<Member> L){
@@ -38,6 +47,6 @@ public class Enemy : MonoBehaviour {
 
 	void followNearestTarget(Transform t){
 		transform.LookAt (t.transform.position);
-		transform.Translate (Vector3.forward * 10 * Time.deltaTime);
+		transform.Translate(Vector3.forward * 10 * Time.deltaTime);
 	}
 }

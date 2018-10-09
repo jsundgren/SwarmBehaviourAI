@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Level : MonoBehaviour {
 
@@ -12,6 +13,8 @@ public class Level : MonoBehaviour {
 	public List<Enemy> enemies;
 	public float spawnRadius;
 	public float bounds;
+	public Text numberOfSheepLeft;
+
 	// Use this for initialization
 	void Start () {
 		members = new List<Member> ();
@@ -24,10 +27,16 @@ public class Level : MonoBehaviour {
 		enemies.AddRange (FindObjectsOfType<Enemy> ());
 	}
 
+	void Update(){
+		members.Clear ();
+		members.AddRange (FindObjectsOfType<Member> ());
+		numberOfSheepLeft.text = "Number of sheep left: " + (members.Count).ToString();
+	}
+
 	void Spawn(Transform prefab, int count) {
 		for (int i = 0; i < count; i++) {
-			Instantiate(prefab, new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius))
-				, Quaternion.identity);
+			Instantiate(prefab, new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius)),
+				Quaternion.identity);
 		}
 	}
 

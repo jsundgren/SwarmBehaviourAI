@@ -10,8 +10,8 @@ public class Member : MonoBehaviour {
 
 	public Level l;
 	public MemberConfig conf;
-
 	Vector3 wanderTarget;
+	float avoidancePriority = 1000;
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +31,6 @@ public class Member : MonoBehaviour {
 		WrapAround (ref pos, -l.bounds, l.bounds);
 		transform.LookAt (pos);
 		transform.position = pos;
-
 	}
 
 	protected Vector3 Wander() {
@@ -53,9 +52,9 @@ public class Member : MonoBehaviour {
 
 	float WrapAroundFloat(float value, float min, float max) {
 		if (value > max)
-			value = min;
-		else if (value < min)
 			value = max;
+		else if (value < min)
+			value = min;
 
 		return value;
 	}
@@ -85,7 +84,7 @@ public class Member : MonoBehaviour {
 	virtual protected Vector3 Combined(){
 		return conf.cohesionPriority * Cohesion () + conf.wanderPriority * Wander () 
 			+ conf.alignmentPriority * Alignment() + conf.separationPriority * Separation()
-			+ conf.avoidancePriority * Avoidance();
+			+ avoidancePriority * Avoidance();
 	}
 
 	Vector3 Separation(){
@@ -124,6 +123,7 @@ public class Member : MonoBehaviour {
 		if (eList.Count == 0) return avoidVec;
 
 		foreach (Enemy e in eList) {
+			avoidancePriority = 10000/(float)(e.pos - pos).magnitude;
 			avoidVec += avoidTarget (e.pos);
 		}
 
