@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Level : MonoBehaviour {
 
 	public Transform memberPrefab;
-	public Transform enemyPrefab;
+	public Transform enemyNearestTargetPrefab;
 	public int numberOfMembers;
-	public int numberOfEnemies;
+	public int numberOfEnemiesNearestTarget;
 	public List<Member> members;
 	public List<Enemy> enemies;
 	public float spawnRadius;
@@ -21,7 +21,7 @@ public class Level : MonoBehaviour {
 		enemies = new List<Enemy> ();
 
 		Spawn (memberPrefab, numberOfMembers);
-		Spawn (enemyPrefab, numberOfEnemies);
+		Spawn (enemyNearestTargetPrefab, numberOfEnemiesNearestTarget);
 
 		members.AddRange (FindObjectsOfType<Member> ());
 		enemies.AddRange (FindObjectsOfType<Enemy> ());
@@ -40,27 +40,27 @@ public class Level : MonoBehaviour {
 		}
 	}
 
-	public List<Member> findNeighbours(Member m, float radius) {
+    public List<Member> findNeighbours(AIObject o, float radius) {
 
 		List<Member> neighbourFound = new List<Member>();
 
 		foreach (Member otherMember in members) {
-			if (otherMember == m) {
+			if (otherMember == o) {
 				continue;
 			}
 
-			if(Vector3.Distance(m.transform.position, otherMember.transform.position) <= radius){
+			if(Vector3.Distance(o.transform.position, otherMember.transform.position) <= radius){
 				neighbourFound.Add (otherMember);
 			}
 		}
 		return neighbourFound;
 	}
 		
-	public List<Enemy> findEnemies(Member m, float radius){
+    public List<Enemy> findEnemies(AIObject o, float radius){
 		List<Enemy> getEnemies = new List<Enemy> ();
 
 		foreach (Enemy e in enemies) {
-			if (Vector3.Distance (m.pos, e.pos) <= radius) {
+			if (Vector3.Distance (o.pos, e.pos) <= radius) {
 				getEnemies.Add (e);
 			}
 		}

@@ -2,24 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour {
-
+public class Enemy : AIObject {
 
 	public List<Member> targets;
-	public Vector3 pos;
 
 	public void Start(){
 		pos = transform.position;
 		targets = new List<Member> ();
 		targets.AddRange (FindObjectsOfType<Member> ());
-	}
 
-	public void Update(){
-		targets.Clear ();
-		targets.AddRange (FindObjectsOfType<Member> ());
-		followNearestTarget (findNearestTarget (targets));
+    l = FindObjectOfType<Level>();
+		conf = FindObjectOfType<MemberConfig> ();
 	}
-
 
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.name == "SheepWhite (1)(Clone)") {
@@ -27,26 +21,14 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	Transform findNearestTarget(List<Member> L){
-		Transform nearestTarget = null;
-
-		float closestDistSqr = Mathf.Infinity;
-		Vector3 currentPos = transform.position;
-
-		foreach (Member m in L) {
-			Vector3 directionToTarget = m.transform.position - currentPos;
-			float dSqrToTarget = directionToTarget.sqrMagnitude;
-			if (dSqrToTarget < closestDistSqr) {
-				closestDistSqr = dSqrToTarget;
-				nearestTarget = m.transform;
-			}
-		}
-
-		return nearestTarget;
+	protected void clearTargets() {
+		targets.Clear();
+		targets.AddRange (FindObjectsOfType<Member> ());
 	}
 
-	void followNearestTarget(Transform t){
-		transform.LookAt (t.transform.position);
-		transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+	protected void followTarget(Transform t)
+	{
+			transform.LookAt(t.transform.position);
+			transform.Translate(Vector3.forward * 10 * Time.deltaTime);
 	}
 }

@@ -2,14 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Member : MonoBehaviour {
+public class Member : AIObject {
 
-	public Vector3 pos;
-	public Vector3 vel;
-	public Vector3 acc;
-
-	public Level l;
-	public MemberConfig conf;
 	Vector3 wanderTarget;
 	float avoidancePriority = 1000;
 
@@ -19,8 +13,8 @@ public class Member : MonoBehaviour {
 		conf = FindObjectOfType<MemberConfig> ();
 		pos = transform.position;
 		vel = new Vector3(Random.Range(-3,3), 0, Random.Range(-3,3));
-	}
-	
+    }
+
 	// Update is called once per frame
 	void Update () {
 		acc = Combined ();
@@ -82,7 +76,7 @@ public class Member : MonoBehaviour {
 	}
 
 	virtual protected Vector3 Combined(){
-		return conf.cohesionPriority * Cohesion () + conf.wanderPriority * Wander () 
+		return conf.cohesionPriority * Cohesion () + conf.wanderPriority * Wander ()
 			+ conf.alignmentPriority * Alignment() + conf.separationPriority * Separation()
 			+ avoidancePriority * Avoidance();
 	}
@@ -116,7 +110,7 @@ public class Member : MonoBehaviour {
 		return alignVec.normalized;
 	}
 
-	Vector3 Avoidance() { 
+	Vector3 Avoidance() {
 		Vector3 avoidVec = new Vector3 ();
 		var eList = l.findEnemies (this, conf.avoidanceRadius);
 
@@ -129,6 +123,7 @@ public class Member : MonoBehaviour {
 
 		return avoidVec.normalized;
 	}
+
 
 	Vector3 avoidTarget(Vector3 target){
 		Vector3 neededVel = (pos - target).normalized * conf.maxVelocity;
