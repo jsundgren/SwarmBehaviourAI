@@ -21,7 +21,7 @@ public class Level : MonoBehaviour {
 		enemies = new List<Enemy> ();
 
 		Spawn (memberPrefab, numberOfMembers);
-		Spawn (enemyNearestTargetPrefab, numberOfEnemiesNearestTarget);
+		Spawn(enemyNearestTargetPrefab, numberOfEnemiesNearestTarget);
 
 		members.AddRange (FindObjectsOfType<Member> ());
 		enemies.AddRange (FindObjectsOfType<Enemy> ());
@@ -35,8 +35,8 @@ public class Level : MonoBehaviour {
 
 	void Spawn(Transform prefab, int count) {
 		for (int i = 0; i < count; i++) {
-			Instantiate(prefab, new Vector3(Random.Range(-spawnRadius, spawnRadius), 0f, Random.Range(-spawnRadius, spawnRadius)),
-				Quaternion.identity);
+				Instantiate (prefab, new Vector3 (Random.Range (-spawnRadius, spawnRadius), 0f, Random.Range (-spawnRadius, spawnRadius)),
+					Quaternion.identity);
 		}
 	}
 

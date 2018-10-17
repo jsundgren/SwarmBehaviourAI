@@ -10,13 +10,12 @@ public class Enemy : AIObject {
 		pos = transform.position;
 		targets = new List<Member> ();
 		targets.AddRange (FindObjectsOfType<Member> ());
-
-    l = FindObjectOfType<Level>();
+    	l = FindObjectOfType<Level>();
 		conf = FindObjectOfType<MemberConfig> ();
 	}
 
 	void OnTriggerEnter(Collider col){
-		if (col.gameObject.name == "SheepWhite (1)(Clone)") {
+		if (col.gameObject.name == "Running_Sheep(Clone)") {
 			Destroy (col.gameObject);
 		}
 	}
@@ -28,7 +27,8 @@ public class Enemy : AIObject {
 
 	protected void followTarget(Transform t)
 	{
-			transform.LookAt(t.transform.position);
-			transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+		transform.LookAt(t.transform.position);
+		transform.position = new Vector3 (transform.position.x, 0.75f, transform.position.z);
+		transform.Translate(Vector3.forward * 10 * Time.deltaTime);
 	}
 }

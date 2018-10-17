@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyRandomTarget : Enemy {
 
 	Member randomTarget;
+	public Level l;
+	public MemberConfig conf;
 
 	// Use this for initialization
 	public void Start () {

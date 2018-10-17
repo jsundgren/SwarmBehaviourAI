@@ -16,7 +16,6 @@ public class EnemyNearestTarget : Enemy
 
         float closestDistSqr = Mathf.Infinity;
         Vector3 currentPos = transform.position;
-
         foreach (Member m in L)
         {
             Vector3 directionToTarget = m.transform.position - currentPos;

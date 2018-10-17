@@ -6,6 +6,7 @@ public class Member : AIObject {
 
 	Vector3 wanderTarget;
 	float avoidancePriority = 1000;
+	float randomMaxVelocity;
 
 	// Use this for initialization
 	void Start () {
@@ -13,6 +14,8 @@ public class Member : AIObject {
 		conf = FindObjectOfType<MemberConfig> ();
 		pos = transform.position;
 		vel = new Vector3(Random.Range(-3,3), 0, Random.Range(-3,3));
+		randomMaxVelocity = RandomVel ();
+
     }
 
 	// Update is called once per frame
@@ -20,7 +23,7 @@ public class Member : AIObject {
 		acc = Combined ();
 		acc = Vector3.ClampMagnitude (acc, conf.maxAcceleration);
 		vel = vel + acc * Time.deltaTime;
-		vel = Vector3.ClampMagnitude (vel, conf.maxVelocity);
+		vel = Vector3.ClampMagnitude (vel, randomMaxVelocity);
 		pos = pos + vel * Time.deltaTime;
 		WrapAround (ref pos, -l.bounds, l.bounds);
 		transform.LookAt (pos);
@@ -121,6 +124,7 @@ public class Member : AIObject {
 			avoidVec += avoidTarget (e.pos);
 		}
 
+		avoidVec = new Vector3 (avoidVec.x, 0f, avoidVec.z);
 		return avoidVec.normalized;
 	}
 
@@ -132,5 +136,10 @@ public class Member : AIObject {
 
 	float RandomBinomial() {
 		return Random.Range(0f, 1f) - Random.Range(0f, 1f);
+	}
+
+	float RandomVel() {
+		return conf.maxVelocity * Random.Range (0.5f, 1f);
+
 	}
 }
