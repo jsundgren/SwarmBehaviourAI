@@ -20,6 +20,21 @@ public class Enemy : AIObject {
 		}
 	}
 
+	void WrapAround(ref Vector3 vec, float min, float max) {
+		vec.x = WrapAroundFloat (vec.x, min, max);
+		vec.y = WrapAroundFloat (vec.y, min, max);
+		vec.z = WrapAroundFloat (vec.z, min, max);
+	}
+
+	float WrapAroundFloat(float value, float min, float max) {
+		if (value > max)
+			value = max;
+		else if (value < min)
+			value = min;
+
+		return value;
+	}
+
 	protected void clearTargets() {
 		targets.Clear();
 		targets.AddRange (FindObjectsOfType<Member> ());
@@ -29,6 +44,7 @@ public class Enemy : AIObject {
 	{
 		transform.LookAt(t.transform.position);
 		transform.position = new Vector3 (transform.position.x, 0.75f, transform.position.z);
+		WrapAround (ref pos, -l.bounds, l.bounds);
 		transform.Translate(Vector3.forward * 10 * Time.deltaTime);
 	}
 }

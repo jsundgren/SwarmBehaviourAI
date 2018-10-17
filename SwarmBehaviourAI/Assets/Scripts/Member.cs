@@ -15,7 +15,6 @@ public class Member : AIObject {
 		pos = transform.position;
 		vel = new Vector3(Random.Range(-3,3), 0, Random.Range(-3,3));
 		randomMaxVelocity = RandomVel ();
-
     }
 
 	// Update is called once per frame

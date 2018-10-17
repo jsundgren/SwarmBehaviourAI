@@ -31,8 +31,6 @@ public class CameraSwitch : MonoBehaviour {
 	}
 
 	private void changeCameraOnClick(){
-
-		Debug.Log (idx);
 		cams[idx].enabled = false;
 		cams [idx++].enabled = true;
 		if (idx == 5) {
