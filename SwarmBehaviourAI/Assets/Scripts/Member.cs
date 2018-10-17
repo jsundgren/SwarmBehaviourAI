@@ -5,8 +5,9 @@ using UnityEngine;
 public class Member : AIObject {
 
 	Vector3 wanderTarget;
-	float avoidancePriority = 1000;
+	//float avoidancePriority = 1000;
 	float randomMaxVelocity;
+	public int health = 100;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,13 @@ public class Member : AIObject {
 		vel = new Vector3(Random.Range(-3,3), 0, Random.Range(-3,3));
 		randomMaxVelocity = RandomVel ();
     }
+
+	void OnTriggerStay(Collider col){
+		if (col.gameObject.name == "Running(Clone)") {
+			health -= 5;
+			//randomMaxVelocity = randomMaxVelocity * 0.5f;
+		}
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -27,6 +35,10 @@ public class Member : AIObject {
 		WrapAround (ref pos, -l.bounds, l.bounds);
 		transform.LookAt (pos);
 		transform.position = pos;
+
+		if (health <= 0) {
+			Destroy (gameObject);
+		}
 	}
 
 	protected Vector3 Wander() {
@@ -80,7 +92,7 @@ public class Member : AIObject {
 	virtual protected Vector3 Combined(){
 		return conf.cohesionPriority * Cohesion () + conf.wanderPriority * Wander ()
 			+ conf.alignmentPriority * Alignment() + conf.separationPriority * Separation()
-			+ avoidancePriority * Avoidance();
+			+ conf.avoidancePriority * Avoidance();
 	}
 
 	Vector3 Separation(){
@@ -119,7 +131,7 @@ public class Member : AIObject {
 		if (eList.Count == 0) return avoidVec;
 
 		foreach (Enemy e in eList) {
-			avoidancePriority = 10000/(float)(e.pos - pos).magnitude;
+			//avoidancePriority = 1000000/(float)(e.pos - pos).magnitude;
 			avoidVec += avoidTarget (e.pos);
 		}
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySlowestTarget : Enemy
 {
-    readonly float enemyRadius = 20;
+    public float enemyRadius = 20;
 
     public void Update()
     {
@@ -21,9 +21,12 @@ public class EnemySlowestTarget : Enemy
         float slowestTargetVelocity = Mathf.Infinity;
         float targetVelocity = 0;
 
-        if(n.Count < 1) {
-          return this.transform;
-        }
+		if (n.Count < 1) {
+			enemyRadius = 1000;
+			n = l.findNeighbours(this, enemyRadius);
+		} else {
+			enemyRadius = 20;
+		}
 
         foreach (Member m in n)
         {
