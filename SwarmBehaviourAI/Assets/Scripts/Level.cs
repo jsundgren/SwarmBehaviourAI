@@ -7,8 +7,10 @@ public class Level : MonoBehaviour {
 
 	public Transform memberPrefab;
 	public Transform enemyNearestTargetPrefab;
+	public Transform enemySlowestTargetPrefab;
 	public int numberOfMembers;
 	public int numberOfEnemiesNearestTarget;
+	public int numberOfEnemiesSlowestTarget;
 	public List<Member> members;
 	public List<Enemy> enemies;
 	public float spawnRadius;
@@ -22,6 +24,7 @@ public class Level : MonoBehaviour {
 
 		Spawn (memberPrefab, numberOfMembers);
 		Spawn(enemyNearestTargetPrefab, numberOfEnemiesNearestTarget);
+		Spawn(enemySlowestTargetPrefab, numberOfEnemiesSlowestTarget);
 
 		members.AddRange (FindObjectsOfType<Member> ());
 		enemies.AddRange (FindObjectsOfType<Enemy> ());
@@ -30,7 +33,11 @@ public class Level : MonoBehaviour {
 	void Update(){
 		members.Clear ();
 		members.AddRange (FindObjectsOfType<Member> ());
-		numberOfSheepLeft.text = "Number of sheep left: " + (members.Count).ToString();
+		if(members.Count > 0) {
+			numberOfSheepLeft.text = "Number of sheep left: " + (members.Count).ToString();
+		} else {
+			numberOfSheepLeft.text = "All sheeps have been eaten!!";
+		}
 	}
 
 	void Spawn(Transform prefab, int count) {
@@ -55,7 +62,7 @@ public class Level : MonoBehaviour {
 		}
 		return neighbourFound;
 	}
-		
+
     public List<Enemy> findEnemies(AIObject o, float radius){
 		List<Enemy> getEnemies = new List<Enemy> ();
 

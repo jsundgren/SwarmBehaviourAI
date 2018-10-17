@@ -5,11 +5,12 @@ using UnityEngine;
 public class EnemySlowestTarget : Enemy
 {
     readonly float enemyRadius = 20;
-    Vector3 wanderTarget;
 
     public void Update()
     {
-        followTarget(findSlowestTarget(targets));
+        if(targets.Count > 0) {
+          followTarget(findSlowestTarget(targets));
+        }
     }
 
    Transform findSlowestTarget(List<Member> L)
@@ -19,8 +20,6 @@ public class EnemySlowestTarget : Enemy
 
         float slowestTargetVelocity = Mathf.Infinity;
         float targetVelocity = 0;
-
-        Member target = null;
 
         if(n.Count < 1) {
           return this.transform;
@@ -32,7 +31,6 @@ public class EnemySlowestTarget : Enemy
             if(targetVelocity < slowestTargetVelocity) {
                 slowestTargetVelocity = targetVelocity;
                 slowestTarget = m.transform;
-                target = m;
             }
         }
         return slowestTarget;

@@ -10,7 +10,7 @@ public class Enemy : AIObject {
 		pos = transform.position;
 		targets = new List<Member> ();
 		targets.AddRange (FindObjectsOfType<Member> ());
-    	l = FindObjectOfType<Level>();
+		l = FindObjectOfType<Level>();
 		conf = FindObjectOfType<MemberConfig> ();
 	}
 

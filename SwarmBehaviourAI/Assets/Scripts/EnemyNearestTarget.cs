@@ -7,7 +7,9 @@ public class EnemyNearestTarget : Enemy
 
     public void Update(){
         clearTargets();
-        followTarget(findNearestTarget(targets));
+        if(targets.Count > 0) {
+          followTarget(findNearestTarget(targets));
+        }
     }
 
     Transform findNearestTarget(List<Member> L)
