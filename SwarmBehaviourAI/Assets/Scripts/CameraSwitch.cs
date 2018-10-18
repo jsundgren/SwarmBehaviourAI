@@ -12,6 +12,7 @@ public class CameraSwitch : MonoBehaviour {
 	public List<Camera> cams;
 	private int idx = 0;
 	private bool initTopCamAtStart = false;
+	private StartGame startGameMenu;
 
 	// Use this for initialization
 	void Start () {
@@ -19,14 +20,16 @@ public class CameraSwitch : MonoBehaviour {
 		initTopCamAtStart = true;
 		cams = new List<Camera> ();
 		cams.AddRange(new Camera[]{topCam, cornerCam1, cornerCam2, cornerCam3, cornerCam4});
-
+		startGameMenu = FindObjectOfType<StartGame>();
 	}
 
 	void Update(){
-		if (Input.GetKeyDown ("space")) {
-			changeCameraOnClick ();
-		} else if (Input.GetKeyDown ("t")) {
-			changeToTopCamera ();
+		if(StartGame.GameMenu == false) {
+			if (Input.GetKeyDown ("space")) {
+				changeCameraOnClick ();
+			} else if (Input.GetKeyDown ("t")) {
+				changeToTopCamera ();
+			}
 		}
 	}
 

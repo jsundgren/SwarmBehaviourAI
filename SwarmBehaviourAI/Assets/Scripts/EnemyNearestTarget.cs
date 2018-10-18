@@ -11,6 +11,10 @@ public class EnemyNearestTarget : Enemy
           followTarget(findNearestTarget(targets));
         }
     }
+    
+    public override string setSort() {
+      return "Wolf (nearest)";
+    }
 
     Transform findNearestTarget(List<Member> L)
     {

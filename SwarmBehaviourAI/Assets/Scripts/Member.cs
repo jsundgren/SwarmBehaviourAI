@@ -19,8 +19,13 @@ public class Member : AIObject {
     }
 
 	void OnTriggerStay(Collider col){
-		if (col.gameObject.name == "Running(Clone)") {
+		if (col.gameObject.name == "Running(Clone)" || col.gameObject.name == "Running2(Clone)") {
 			health -= 5;
+
+			if(health == 0) {
+				col.gameObject.GetComponentInChildren<Enemy>().countFood += 1;
+				l.updateFoodText();
+			}
 			//randomMaxVelocity = randomMaxVelocity * 0.5f;
 		}
 	}

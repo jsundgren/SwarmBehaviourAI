@@ -8,9 +8,14 @@ public class EnemySlowestTarget : Enemy
 
     public void Update()
     {
-        if(targets.Count > 0) {
-          followTarget(findSlowestTarget(targets));
-        }
+      clearTargets();
+      if(targets.Count > 0) {
+        followTarget(findSlowestTarget(targets));
+      }
+    }
+
+    public override string setSort(){
+      return "Wolf (slowest)";
     }
 
    Transform findSlowestTarget(List<Member> L)

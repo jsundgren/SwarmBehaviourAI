@@ -13,14 +13,17 @@ public class Level : MonoBehaviour {
 	public int numberOfEnemiesSlowestTarget;
 	public List<Member> members;
 	public List<Enemy> enemies;
+	public List<Text> foodTexts;
 	public float spawnRadius;
 	public float bounds;
 	public Text numberOfSheepLeft;
+	Canvas countCanvas;
 
 	// Use this for initialization
-	void Start () {
+	public void StartGame () {
 		members = new List<Member> ();
 		enemies = new List<Enemy> ();
+		foodTexts = new List <Text> ();
 
 		Spawn (memberPrefab, numberOfMembers);
 		Spawn(enemyNearestTargetPrefab, numberOfEnemiesNearestTarget);
@@ -28,16 +31,22 @@ public class Level : MonoBehaviour {
 
 		members.AddRange (FindObjectsOfType<Member> ());
 		enemies.AddRange (FindObjectsOfType<Enemy> ());
+
+		GameObject countObj = GameObject.Find("CountCanvas");
+		countCanvas = countObj.GetComponent<Canvas>();
+		Vector3 textPosition = new Vector3 (105,0,0);
+
+		foreach(Enemy e in enemies){
+			textPosition.y += 20;
+			Text newText = Instantiate(numberOfSheepLeft, textPosition, Quaternion.identity, countCanvas.transform);
+			newText.text = e.foodText() + e.countFood.ToString();
+			foodTexts.Add(newText);
+		}
 	}
 
 	void Update(){
 		members.Clear ();
 		members.AddRange (FindObjectsOfType<Member> ());
-		if(members.Count > 0) {
-			numberOfSheepLeft.text = "Number of sheep left: " + (members.Count).ToString();
-		} else {
-			numberOfSheepLeft.text = "All sheeps have been eaten!!";
-		}
 	}
 
 	void Spawn(Transform prefab, int count) {
@@ -73,5 +82,11 @@ public class Level : MonoBehaviour {
 		}
 
 		return getEnemies;
+	}
+
+	public void updateFoodText(){
+		for(int i = 0; i<enemies.Count; i++){
+			foodTexts[i].text = enemies[i].foodText() + enemies[i].countFood.ToString();
+		}
 	}
 }

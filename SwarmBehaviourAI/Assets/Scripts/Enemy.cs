@@ -5,6 +5,12 @@ using UnityEngine;
 public class Enemy : AIObject {
 
 	public List<Member> targets;
+	public int countFood;
+	protected string wolfSort;
+
+	public void Awake() {
+		wolfSort = setSort();
+	}
 
 	public void Start(){
 		pos = transform.position;
@@ -19,8 +25,6 @@ public class Enemy : AIObject {
 			// if needed
 		}
 	}
-
-
 
 	void WrapAround(ref Vector3 vec, float min, float max) {
 		vec.x = WrapAroundFloat (vec.x, min, max);
@@ -48,5 +52,13 @@ public class Enemy : AIObject {
 		WrapAround (ref pos, -l.bounds, l.bounds);
 		transform.position = new Vector3 (transform.position.x, 0.75f, transform.position.z);
 		transform.Translate(Vector3.forward * 10 * Time.deltaTime);
+	}
+
+	public virtual string setSort() {
+		return "Wolf";
+	}
+
+	public string foodText() {
+		return "Sheeps eaten by " + wolfSort + ": ";
 	}
 }

@@ -28,4 +28,8 @@ public class EnemyRandomTarget : Enemy {
 	Transform findRandomTarget() {
 		return randomTarget.transform;
 	}
+	
+	public override string setSort() {
+		return "Wolf (random)";
+	}
 }
